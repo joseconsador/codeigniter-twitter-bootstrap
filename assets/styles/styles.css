@@ -1,0 +1,15 @@
+#dialog-confirm {
+    display:none;
+}
+
+.hidden {
+	display:none !important;
+}
+
+.chzn-done option {
+	color: #333;
+}
+
+thead input, thead select {
+	width: auto !important;
+}
