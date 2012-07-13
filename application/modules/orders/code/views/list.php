@@ -4,30 +4,22 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var order_id;
-
-        $('#div-complete')                
-            .dialog({
-                autoOpen: false,
-                title: 'Recepient Details', 
-                modal: true,                
-                buttons: {
-                    "Ok": function () {
-                            $('input[name="order_id"]').val(order_id);
-                            $('#order-complete-form').trigger('submit');
-                        }
-                    },  
-                    "Cancel": function () {
-                        $(this).dialog('close');
-                    }
-            });         
+      
         /** Mark item as complete **/
-        $('a.complete-order').click(function () {
+        $('a.complete-order').click(function (event) {   
+            event.preventDefault();
             order_id = $(this).parents('tr').attr('id');
-            $('#div-complete').dialog('open');
+            bootbox.confirm($('#div-complete').html(), 
+                        function(confirmed) {
+                        if (confirmed) {
+                            $('input[name="order_id"]').val(order_id);
+                            $('#order-complete-form').trigger('submit');                            
+                        }
+                });            
         });        
     });
 </script>
-<div id="div-complete">
+<div id="div-complete" class="hide">
     <form id="order-complete-form" class="require-validation" action="<?php echo site_url('orders/complete/')?>" method="post">
         <table>
             <tr>
@@ -43,64 +35,63 @@
     </form>
 </div>
 
-<h3>Filter</h3>
-<form id="search-form" method="get" action="">
-    <div class="grid_3">
-        <p>
-            <label>Control Number</label>
-            <input type="text" name="control_number" value="<?=set_value('control_number');?>"/>
-        </p>       
-    </div>
-    <div class="grid_3">
-        <p>
-            <label>Status</label>
-            <?=form_dropdown('status', array('' => 'Select&hellip;', 'Paid' => 'Paid', 'Complete' => 'Complete'))?>
-        </p>
-    </div>
-    <div class="grid_4">
-        <p>
-            <label>Branch</label>       
-            <?=form_dropdown('branch_id', 
-                    create_dropdown('branches', 'name'),
-                    set_value('branch_id')
-                );
-                ?>
-        </p>
-    </div>
-    <div class="clear"></div>
-    <div class="grid_6">
-        <p>
-            <label>Date</label>
-            From <input type="text" class="datetimepick" name="date_start" value="<?=set_value('date_start')?>"/> 
-            To: <input type="text" class="datetimepick" name="date_end" value="<?=set_value('date_end')?>"/> 
-        </p>
-    </div>
-    <div class="clear"></div>
-    <h3>Order By</h3>
-    <div class="grid_3">
-        <p>            
-            Field: <?=form_dropdown('sort_by', $sort, set_value('sort_by'))?>
-        </p>
-    </div>
-    <div class="grid_2">
-        <p>            
-            Direction: <?=form_dropdown('direction', array('desc' => 'Descending', 'asc' => 'Ascending'), set_value('direction'))?>
-        </p>
-    </div>    
-    <div class="clear"></div>
-    <input type="submit" value="Search" />
-    <input type="hidden" name="search" value="1" />        
-</form>
+<ul class="breadcrumb">
+  <li>
+    <a href="<?=site_url('dashboard')?>">Dashboard</a> <span class="divider">/</span>
+  </li>
+  <li class="active">Orders</li>
+</ul>
 
-<div class="clearfix"></div>
-<h3>Orders</h3>
-<div class="grid_16">
-    <span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-plus"></span>
-    <?=anchor('orders/form', 'Add');?>
+<div class="row-fluid">
+    <div class="span-12">    
+        <a class="btn btn-success" href="<?=current_url() . '/form'?>">
+            <i class="icon-plus icon-white"></i> 
+            Add
+        </a>
+        <a class="btn" href="#filters" data-toggle="collapse"><i class="icon-plus icon-black"></i> Filters</a>
+    </div>
 </div>
-<div class="grid_16">
+
+<div id="filters" class="collapse">    
+    <div class="span-12">
+        <form class="well form-inline require-validation">
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="control_number">Control Number</label>
+                        <div class="controls">
+                            <input type="text" class="input-xlarge" name="control_number" id="control_number" value="<?php echo isset($control_number) ? $control_number : '';?>" />
+                        </div>
+                </div>       
+                <div class="control-group">
+                    <label class="control-label" for="control_number">Status</label>
+                        <div class="controls">
+                            <?=form_dropdown('status', array('' => 'Select&hellip;', 'Paid' => 'Paid', 'Complete' => 'Complete'))?>
+                        </div>
+                </div>   
+                <div class="control-group">
+                    <label class="control-label" for="branch_id">Branch</label>
+                        <div class="controls">
+                            <?=form_dropdown('branch_id', create_dropdown('branches', 'name'), set_value('branch_id'));?>
+                        </div>
+                </div>      
+                <div class="control-group">
+                    <label class="control-label" for="">Date</label>
+                        <div class="controls">
+                            From <input type="text" class="datetimepick" name="date_start" value="<?=set_value('date_start')?>"/> 
+                            To: <input type="text" class="datetimepick" name="date_end" value="<?=set_value('date_end')?>"/> 
+                        </div>
+                </div>                
+                <button type="submit" class="btn"><i class="icon-search icon-black"></i> Search</button>  
+            </fieldset>    
+            <input type="hidden" name="search" value="1" />        
+        </form>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
     <?php if (isset($orders) && count($orders) > 0):?>
-        <table class="">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -122,36 +113,30 @@
                     <td><?=$order->status?></td>
                     <td><?=date('M d, Y h:i a', strtotime($order->date_created))?></td>                    
                     <td>       
+                        <a class="btn" href="<?=site_url('orders/view/' . $order->order_id)?>">
+                            <i class="icon-zoom-in icon-black"></i> 
+                            View
+                        </a>
                         <?php if ($order->status != 'Complete'):?>
-                        <span style="float:left;">                           
-                            <span style="float:left;" class="ui-icon ui-icon-tag"></span>
-                            <a href="javascript:void(0);" class="complete-order">Complete</a>
-                        </span>
+                        <a href="javascript:void(0);" class="complete-order btn btn-primary">
+                            <i class="icon-ok-sign icon-white"></i> 
+                            Complete
+                        </a>
                         <?php endif;?>
-                        <span style="float:left;">
-                            <span style="float:left;margin-right: .3em;" class="ui-icon ui-icon-zoomin"></span>
-                            <?=anchor('orders/view/' . $order->order_id, 'View');?>                           
-                        </span>
                         <?php if($this->user->is_admin && $order->status != 'Complete'):?>
-                        <span>
-                            <span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-cancel"></span>
-                            <?=anchor('orders/delete/' . $order->order_id, 'Delete', 'class="jqdelete"');?>
-                        </span>
-                        <?php endif;?>
+                        <a class="btn btn-danger delete" href="<?=site_url('orders/delete/' . $order->order_id, 'Delete')?>">
+                            <i class="icon-trash icon-white"></i> 
+                            Delete
+                        </a>  
+                        <?php endif?>
                     </td>
                 </tr>
                 <?php endforeach;?>
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="8" class="pagination">
-                        <?php echo $this->pagination->create_links(); ?>
-                    </td>
-                </tr>                
+            <tfoot>             
             </tfoot>
-        </table>
-        <div id="dialog-confirm" title="Delete this order?">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This record will be permanently deleted and cannot be recovered. Are you sure?</p>
-        </div>    
+        </table>    
+        <?php echo $this->pagination->create_links(); ?>        
     <?php endif;?>
+    </div>
 </div>

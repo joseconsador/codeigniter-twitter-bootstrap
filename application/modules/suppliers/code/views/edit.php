@@ -10,8 +10,10 @@
 </ul>
 
 <?php if(validation_errors()):?>
-    <div class="row-fluid">
-        <span class="label label-important"><?=validation_errors()?></span>
+    <div class="alert">
+        <button class="close" data-dismiss="alert">×</button>      
+        <span class="label label-important">Error !</span>
+        <?=validation_errors()?>
     </div>
 <?php endif;?>
 

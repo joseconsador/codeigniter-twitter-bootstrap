@@ -21,18 +21,22 @@
             label.valid {
               width: 24px;
               height: 24px;
-              background: url(assets/img/valid.png) center center no-repeat;
+              background: url(<?=image_dir('valid.png')?>) center center no-repeat;
               display: inline-block;
               text-indent: -9999px;
             }
             label.error {
                 font-weight: bold;
-                color: red;
+                color: red;                
                 padding: 2px 8px;
                 margin-top: 2px;
-            }            
+            }
+            .error {
+                color: red;              
+            }                 
         </style>
         <link href="<?=css_dir('bootstrap-responsive.css')?>" rel="stylesheet">
+        <link href="<?=css_dir('jqueryui/jquery-ui-1.8.16.custom.css')?>" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="<?= css_dir('chosen.css'); ?>" />
         
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -82,7 +86,7 @@
                     <?php if ($this->user->is_admin):?>
                     <li><a href="<?= site_url('dashboard') ?>">Dashboard</a></li>
                     <?php endif;?>
-                    <li><a href="<?= site_url('orders') ?>">Orders</a></li>
+                    <li <?=isset($order_nav) ? $order_nav : ''?>><a href="<?= site_url('orders') ?>">Orders</a></li>
                     <li><a href="<?= site_url('items/inventory/transfers') ?>">Transfers</a></li>
                     <?php if ($this->user->is_admin):?>
                     <li <?=isset($item_nav) ? $item_nav : ''?>><a href="<?= site_url('items') ?>">Items</a></li>

@@ -39,13 +39,16 @@ $(document).ready(function () {
     // Validate forms with class require-validation.
     // http://docs.jquery.com/Plugins/Validation
     $('form.require-validation').validate({
-        highlight: function(label) {
+        highlight: function(label) {console.log($('a[href=#' + $(label).parents('.tab-pane').attr('id') + ']'));
             $(label).closest('.control-group').addClass('error');
+            $('a[href=#' + $(label).parents('.tab-pane').attr('id') + ']').addClass('error').removeClass('valid');
         },
         success: function(label) {
             label
                 .text('OK!').addClass('valid')
                 .closest('.control-group').addClass('success');
+            
+            $('a[href=#' + $(label).parents('.tab-pane').attr('id') + ']').addClass('valid').removeClass('error');
         }        
     });
 });

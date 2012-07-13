@@ -7,7 +7,7 @@
 	$orders = $this->db->get();
 ?>
 <?php if ($orders->num_rows() > 0):?>
-<table>
+<table class="table table-condensed">
 	<tbody>
 	<?php foreach ($orders->result() as $order):?>
 		<tr style="cursor:pointer" onclick="window.location = '<?=site_url('/orders/view/' . $order->order_id)?>'">

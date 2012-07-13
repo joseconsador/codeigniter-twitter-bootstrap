@@ -1,4 +1,6 @@
 $(document).ready(function () {        
+    $(".collapse").collapse({toggle: false});
+
     $('.accordion').accordion({
         autoHeight:false
     });

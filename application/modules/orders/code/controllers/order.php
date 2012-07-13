@@ -22,6 +22,7 @@ class Order extends MY_Controller {
         $this->model = $this->orders;
         
         $this->load->config('orders');
+        $this->load->vars(array('order_nav' => 'class="active"'));
     }
 
     // --------------------------------------------------------------------

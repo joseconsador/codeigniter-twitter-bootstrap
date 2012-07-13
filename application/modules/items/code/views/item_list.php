@@ -104,9 +104,3 @@
     <?php endif;?>
     </div>
 </div>
-
-<script type="text/javascript">  
-    $(document).ready(function () {
-        $(".collapse").collapse({toggle: false});
-    });
-</script>
