@@ -32,12 +32,10 @@ class Order_item extends MY_Model {
         }
         
         foreach ($items as $index => $item) {
-            $i = new cInventory($item);
-
             $data['order_id']  = $order_id;
             $data['item_id']   = $item;
             $data['quantity']  = $qty[$index];
-            $data['unit_cost'] = $this->items->get_unit_cost($i->getItem()->item_id);
+            $data['unit_cost'] = $this->items->get_unit_cost($item);
  
             if (!$this->do_save($data)) 
             {                                

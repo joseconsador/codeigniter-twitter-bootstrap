@@ -4,18 +4,26 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var order_id;
-      
-        /** Mark item as complete **/
-        $('a.complete-order').click(function (event) {   
-            event.preventDefault();
-            order_id = $(this).parents('tr').attr('id');
-            bootbox.confirm($('#div-complete').html(), 
-                        function(confirmed) {
-                        if (confirmed) {
+
+        $('#div-complete')                
+            .dialog({
+                autoOpen: false,
+                title: 'Recepient Details', 
+                modal: true,                
+                buttons: {
+                    "Ok": function () {
                             $('input[name="order_id"]').val(order_id);
-                            $('#order-complete-form').trigger('submit');                            
+                            $('#order-complete-form').trigger('submit');
                         }
-                });            
+                    },  
+                    "Cancel": function () {
+                        $(this).dialog('close');
+                    }
+            });         
+        /** Mark item as complete **/
+        $('a.complete-order').click(function () {
+            order_id = $(this).parents('tr').attr('id');
+            $('#div-complete').dialog('open');
         });        
     });
 </script>

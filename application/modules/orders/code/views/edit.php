@@ -20,29 +20,29 @@
 
 <div class="row-fluid">
 
-<?php echo form_open('', 'id="order-form" class="require-validation"')?>
-    <?php if(!$this->user->is_admin):?>        
-        <input type="hidden" id="user_id" name="user_id" value="<?php echo $this->user->user_id;?>" />
-        <input type="hidden" id="branch_id" name="branch_id" value="<?php echo $this->user->branch_id;?>" />
-    <?php endif;?>    
-    <ul class="nav nav-tabs">
-        <?php if($this->user->is_admin):?>        
-        <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
-        <?php endif;?>
-        <!-- Client tab -->
-        <li><a href="#client" data-toggle="tab">Client Info</a></li>      
-		<!-- Order tab -->
-        <li><a href="#order" data-toggle="tab">Order Info</a></li>
-		<!-- Payment tab -->
-        <li><a href="#payment" data-toggle="tab">Payment Details</a></li>
-    </ul>
+<?php echo form_open('', 'id="order-form" class="require-validation form-horizontal"')?>
+        <?php if(!$this->user->is_admin):?>        
+            <input type="hidden" id="user_id" name="user_id" value="<?php echo $this->user->user_id;?>" />
+            <input type="hidden" id="branch_id" name="branch_id" value="<?php echo $this->user->branch_id;?>" />
+        <?php endif;?>    
+        <ul class="nav nav-tabs">
+            <?php if($this->user->is_admin):?>        
+            <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+            <?php endif;?>
+            <!-- Client tab -->
+            <li><a href="#client" data-toggle="tab">Client Info</a></li>      
+    		<!-- Order tab -->
+            <li><a href="#order" data-toggle="tab">Order Info</a></li>
+    		<!-- Payment tab -->
+            <li><a href="#payment" data-toggle="tab">Payment Details</a></li>
+        </ul>
 
-    <div class="tab-content">
-        <div class="tab-pane active" id="details"><?php $this->load->view('order/details');?></div>
-        <div class="tab-pane" id="client"><?php $this->load->view('order/client');?></div> 
-        <div class="tab-pane" id="order"><?php $this->load->view('order/order');?></div>        
-        <div class="tab-pane" id="payment"><?php $this->load->view('order/payment');?></div>          
-    </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="details"><?php $this->load->view('order/details');?></div>
+            <div class="tab-pane" id="client"><?php $this->load->view('order/client');?></div> 
+            <div class="tab-pane" id="order"><?php $this->load->view('order/order');?></div>        
+            <div class="tab-pane" id="payment"><?php $this->load->view('order/payment');?></div>          
+        </div>
 
         <div class="control-group">
             <div class="controls">

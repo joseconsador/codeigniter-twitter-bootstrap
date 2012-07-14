@@ -92,7 +92,7 @@
                     <li <?=isset($item_nav) ? $item_nav : ''?>><a href="<?= site_url('items') ?>">Items</a></li>
                     <li <?=isset($category_nav) ? $category_nav : ''?>><a href="<?= site_url('items/categories') ?>">Categories</a></li>
                     <li><a href="<?= site_url('items/inventory') ?>">Inventory</a></li>
-                    <li><a href="<?= site_url('items/inventory/spoilages') ?>">Spoilage</a></li>
+                    <li <?=isset($spoilages_nav) ? $spoilages_nav : ''?>><a href="<?= site_url('items/inventory/spoilages') ?>">Spoilage</a></li>
                     <li <?=isset($purchasing_nav) ? $purchasing_nav : ''?>><a href="<?= site_url('items/purchasing') ?>">Purchasing</a></li>
                     <li <?=isset($branch_nav) ? $branch_nav : ''?>><a href="<?= site_url('branches') ?>">Branches</a></li>
                     <li <?=isset($suppliers_nav) ? $suppliers_nav : ''?>><a href="<?= site_url('suppliers') ?>">Suppliers</a></li>

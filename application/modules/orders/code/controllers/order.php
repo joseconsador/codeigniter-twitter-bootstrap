@@ -143,7 +143,7 @@ class Order extends MY_Controller {
 	function form($id = null) {
 		$this->load->model(array('items', 'order_item', 'model_inventory'));
 		
-		$items = $this->model_inventory->get_available_items();
+		$items = $this->items->fetch_all();
 
         $order_items    = array();
         $client_address = array();

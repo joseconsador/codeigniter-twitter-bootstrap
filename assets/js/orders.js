@@ -32,55 +32,37 @@ $(document).ready(function () {
 				buttons: {
 					"Ok": function () {
 						var qty = parseInt($('input[name="item-qty"]').val());
-						var modal = $(this);
-						var qty_ok = false;
-						var item_id = 0;
+						var modal = $(this);						
+						var item_id = val;
 
-						$.ajax({
-							url: BASE_URL + 'items/inventory/get_item',
-							type: 'post',
-							dataType: 'json',
-							data: 'item_inventory_id=' + val,
-							success: function (response) {
-								if (qty <= parseInt(response.quantity)) {
-									qty_ok = true;
-									item_id = response.item_id;	
+						if (qty % 1 == 0 && qty > 0 && item_id > 0) {
+							$.ajax({
+								url: BASE_URL + 'items/get_item_cost',
+								type: 'post',
+								dataType: 'json',
+								data: 'item_id=' + item_id + '&qty=' + qty,
+								success: function (data) {
+								
+									$('#order-form').append('<input type="hidden" id="item-' + val + '" name="items[]" value="' + val + '" />');
+									$('#order-form').append('<input type="hidden" id="qty-' + val + '" name="qty[]" value="' + qty + '" />');
+									$('#order-form').append('<input type="hidden" id="order_item-' + val + '" name="order_item[]" value="" />');
 
-									if (qty % 1 == 0 && qty > 0 && qty_ok && item_id > 0) {
-										$.ajax({
-											url: BASE_URL + 'items/get_item_cost',
-											type: 'post',
-											dataType: 'json',
-											data: 'item_id=' + item_id + '&qty=' + qty,
-											success: function (data) {
-											
-												$('#order-form').append('<input type="hidden" id="item-' + val + '" name="items[]" value="' + val + '" />');
-												$('#order-form').append('<input type="hidden" id="qty-' + val + '" name="qty[]" value="' + qty + '" />');
-												$('#order-form').append('<input type="hidden" id="order_item-' + val + '" name="order_item[]" value="" />');
+									$('#item-list tbody').append('<tr id="' + val + '"><td class="item-name">' + text + '</td><td>' + qty + ' </td><td>' + data.cost + '</td><td><a href="javascript:void(0)" class="item-remove">Remove</a></td></tr>');	
+								
+									update_items_selection(function () {
+										subtotal += parseInt(data.cost);
+										$('#subtotal').text(subtotal);
+										$('input[name="order_cost"]').val(subtotal);
 
-												$('#item-list tbody').append('<tr id="' + val + '"><td class="item-name">' + text + '</td><td>' + qty + ' </td><td>' + data.cost + '</td><td><a href="javascript:void(0)" class="item-remove">Remove</a></td></tr>');	
-											
-												update_items_selection(function () {
-													subtotal += parseInt(data.cost);
-													$('#subtotal').text(subtotal);
-													$('input[name="order_cost"]').val(subtotal);
-
-													update_grand_total();
-													// Unset item-qty from DOM for validation the next time this dialog is opened the value is not confused over.
-													$('input[name="item-qty"]').remove();
-												});		
-											}
-										});
-
-										modal.dialog('close');
-										$('#tmp-dialog').remove();
-									}									
-													
-								} else {
-									alert('Request does not match stock. In stock : ' + response.quantity);
+										update_grand_total();
+										// Unset item-qty from DOM for validation the next time this dialog is opened the value is not confused over.
+										$('input[name="item-qty"]').remove();
+									});		
 								}
-							}
-						});
+							});
+						}
+						modal.dialog('close');
+						$('#tmp-dialog').remove();											
 					},	
 					Cancel: function () {
 						$(this).dialog('close');

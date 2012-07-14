@@ -10,7 +10,7 @@ class cInventory extends cBase implements iModel
         return $CI->model_inventory;		
 	}
 
-	public function loadByItemBranch($itemId, $branchId)
+	public static function loadByItemBranch($itemId, $branchId)
 	{		
 		$CI =& get_instance();
 		$CI->db->where('branch_id', $branchId);
@@ -19,8 +19,7 @@ class cInventory extends cBase implements iModel
 		$item = $CI->db->get(self::getModel()->get_table_name());
 
 		if ($item->num_rows() > 0) {
-			$this->loadArray($item->row());
-			return $this;			
+			return new cInventory($item->row());
 		} 
 
 		return FALSE;

@@ -1,6 +1,6 @@
-<div class="grid_10">
-	<p>
-        <label>Items</label>
+<div class="control-group">
+    <label class="control-label" for="order_cost">Items</label>
+    <div class="controls">
 		<select name="item-selection" data-placeholder="Select item...">
 			<option value=""></option>
 			<?php if(isset($items_selection)):?>
@@ -8,13 +8,13 @@
 					<option value="<?=$item->item_inventory_id;?>"><?=$item->item_name?></option>
 				<?php endforeach;?>
 			<?php endif;?>
-		</select>
-	</p>
+		</select>        
+    </div>
 </div>
 <div class="clearfix"></div>
 <?php $total = 0;?>
-<div class="grid_10">	
-	<table id="item-list">
+<div class="span10">	
+	<table id="item-list" class="table table-striped">
 		<thead>
 			<tr>
 				<th>Item</th>

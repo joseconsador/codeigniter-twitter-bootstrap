@@ -21,6 +21,7 @@ class Spoilages extends MY_Controller {
         $this->load->config('spoilages');        
         
         $this->model = new ModelFactory('item_inventory_spoilage', 'item_inventory_spoilage_id');
+        $this->load->vars(array('spoilages_nav' => 'class="active"'));
     }
 
     // --------------------------------------------------------------------
@@ -75,9 +76,7 @@ class Spoilages extends MY_Controller {
                     '',
                     '', 
                     $pagination['per_page'], 
-                    $page,
-                    $this->input->get('sort_by'), 
-                    $this->input->get('direction')
+                    $page
                 );      
                 
                 $total = $this->model->search($search, '')->num_rows();

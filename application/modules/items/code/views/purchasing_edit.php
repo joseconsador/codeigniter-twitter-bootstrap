@@ -25,7 +25,7 @@
 
         <div class=" well">
             <div class="control-group preconfirm">
-                <label class="control-label" for="supplier_id">Name</label>
+                <label class="control-label" for="supplier_id">Supplier</label>
                     <div class="controls">
                         <?=form_dropdown('supplier_id', $this->suppliers->get_dropdown_array('name'), isset($supplier_id) ? $supplier_id : '', 'class="required" id="supplier_id"');?>
                     </div>
@@ -109,33 +109,43 @@
         $('select[name="item-selection"]').chosen().change(function () {
             var text = $('select[name="item-selection"] option:selected').text();
             var val = $(this).val();
+            
+            $('<div id="tmp-dialog"></div>')
+                .html('<p>Quantity <input class="required number" type="text" name="item-qty" /></p>Unit Price <input class="required number" type="text" name="unit-price" />')
+                .dialog({
+                    title: 'Enter Details', 
+                    modal: true,
+                    buttons: {
+                        "Ok": function () {
+                            var qty = parseInt($('input[name="item-qty"]').val());
+                            var unit_price = $('input[name="unit-price"]').val();
+                            var modal = $(this);
+                            var qty_ok = false;
+                            var item_id = 0;
 
-            bootbox.confirm('<p>Quantity <input class="required number" type="text" name="item-qty" /></p>Unit Price <input class="required number" type="text" name="unit-price" />', 
-                function(confirmed) {
-                if (confirmed) {
-                    var qty = parseInt($('input[name="item-qty"]').val());
-                    var unit_price = $('input[name="unit-price"]').val();
-                    var modal = $(this);
-                    var qty_ok = false;
-                    var item_id = 0;
+                            $('#form-purchasing').append('<input type="hidden" id="item-' + val + '" name="items[]" value="' + val + '" />');
+                            $('#form-purchasing').append('<input type="hidden" id="qty-' + val + '" name="qty[]" value="' + qty + '" />');
+                            $('#form-purchasing').append('<input type="hidden" id="cost-' + val + '" name="cost[]" value="' + qty + '" />');
+                            $('#form-purchasing').append('<input type="hidden" id="order_item-' + val + '" name="order_item[]" value="" />');
 
-                    $('#form-purchasing').append('<input type="hidden" id="item-' + val + '" name="items[]" value="' + val + '" />');
-                    $('#form-purchasing').append('<input type="hidden" id="qty-' + val + '" name="qty[]" value="' + qty + '" />');
-                    $('#form-purchasing').append('<input type="hidden" id="cost-' + val + '" name="cost[]" value="' + qty + '" />');
-                    $('#form-purchasing').append('<input type="hidden" id="order_item-' + val + '" name="order_item[]" value="" />');
-
-                    $('#item-list tbody').append('<tr id="' + val + '"><td class="item-name">' + text + '</td><td>' + qty + ' </td><td>' + unit_price + '</td><td>' + qty * unit_price + '</td><td><a href="javascript:void(0)" class="item-remove">Remove</a></td></tr>');   
-                
-                    update_items_selection(function () {
-                        subtotal += unit_price * qty;
-                        $('#subtotal').text(subtotal);
-                        $('input[name="order_cost"]').val(subtotal);
+                            $('#item-list tbody').append('<tr id="' + val + '"><td class="item-name">' + text + '</td><td>' + qty + ' </td><td>' + unit_price + '</td><td>' + qty * unit_price + '</td><td><a href="javascript:void(0)" class="item-remove">Remove</a></td></tr>');   
                         
-                        // Unset item-qty from DOM for validation the next time this dialog is opened the value is not confused over.
-                        $('input[name="item-qty"], input[name="unit-price"]').remove();
-                    });                  
-                }
-            });           
+                            update_items_selection(function () {
+                                subtotal += unit_price * qty;
+                                $('#subtotal').text(subtotal);
+                                $('input[name="order_cost"]').val(subtotal);
+                                
+                                // Unset item-qty from DOM for validation the next time this dialog is opened the value is not confused over.
+                                $('input[name="item-qty"], input[name="unit-price"]').remove();
+                            });                            
+                            $(this).dialog('close');
+                        },  
+                        Cancel: function () {
+                            $(this).dialog('close');
+                            $('#tmp-dialog').remove();
+                        }
+                    }
+                });                
         });      
 
         /** Remove item **/

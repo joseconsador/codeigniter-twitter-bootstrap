@@ -12,10 +12,8 @@ class cOrderItem extends cBase implements iModel
 
 	public function getItem()
 	{
-		if (!$this->inCache('item')) {
-			$inventoryItem = new cInventory($this->item_id);
-
-			$this->setCache('item', $inventoryItem->getItem());
+		if (!$this->inCache('item')) {			
+			$this->setCache('item', new cItem($this->item_id));
 		}
 
 		return $this->getCache('item');

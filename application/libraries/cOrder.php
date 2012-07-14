@@ -41,14 +41,14 @@ class cOrder extends cBase implements iModel
         $items  = array();
         
         foreach ($itemCollection as $key => $item) {
-            $inventory_item = new cInventory($item->item_id);
+            $inventory_item = cInventory::loadByItemBranch($item->item_id, $this->branch_id);
 
             if ($inventory_item && $inventory_item->quantity < $item->quantity) {
                 $errors[] = $inventory_item->getItem()->name;
-            } elseif ($inventory_item && isset($inventory_item->item_inventory_id)) {
+            } elseif (!$inventory_item) {
                 $i = new cItem($item->item_id);
                 $errors[] = $i->name;
-            }            
+            }
 
             $inventory_item->quantity -= $item->quantity;
 

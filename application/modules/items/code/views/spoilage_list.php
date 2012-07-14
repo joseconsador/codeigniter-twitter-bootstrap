@@ -1,50 +1,50 @@
 <?php if (!defined('BASEPATH'))
     exit('No direct script access allowed'); ?>
 
-<h3>Filter</h3>
-<form id="search-form" method="get" action="">
-    <div class="grid_3">
-        <p>
-            <label>Staff</label>
-            <?=form_dropdown('created_by', create_dropdown('user_model', 'firstname,lastname'))?>
-        </p>
-    </div>
-    <div class="grid_4">
-        <p>
-            <label>Branch</label>       
-            <?=form_dropdown('branch_id', 
-                    create_dropdown('branches', 'name'),
-                    set_value('branch_id')
-                );
-                ?>
-        </p>
-    </div>
-    <div class="clear"></div>
-    <h3>Order By</h3>
-    <div class="grid_3">
-        <p>            
-            Field: <?=form_dropdown('sort_by', $sort, set_value('sort_by'))?>
-        </p>
-    </div>
-    <div class="grid_2">
-        <p>            
-            Direction: <?=form_dropdown('direction', array('desc' => 'Descending', 'asc' => 'Ascending'), set_value('direction'))?>
-        </p>
-    </div>    
-    <div class="clear"></div>
-    <input type="submit" value="Search" />
-    <input type="hidden" name="search" value="1" />        
-</form>
+<ul class="breadcrumb">
+  <li>
+    <a href="<?=site_url('dashboard')?>">Dashboard</a> <span class="divider">/</span>
+  </li>
+  <li class="active">Spoilages</li>
+</ul>
 
-<h3>Spoilages</h3>
-
-<div class="grid_16">
-    <span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-plus"></span>
-    <?=anchor('items/inventory/spoilages/form', 'Add Spoilage');?>
+<div class="row-fluid">
+    <div class="span-12">    
+        <a class="btn btn-success" href="<?=current_url() . '/form'?>">
+            <i class="icon-plus icon-white"></i> 
+            Add
+        </a>
+        <a class="btn" href="#filters" data-toggle="collapse"><i class="icon-plus icon-black"></i> Filters</a>
+    </div>
 </div>
-<div class="grid_16">
+
+<div id="filters" class="collapse">    
+    <div class="span-12">
+        <form class="well form-inline require-validation">
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="created_by">Staff</label>
+                        <div class="controls">
+                            <?=form_dropdown('created_by', create_dropdown('user_model', 'firstname,lastname'))?>
+                        </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="created_by">Branch</label>
+                        <div class="controls">
+                            <?=form_dropdown('branch_id', create_dropdown('branches', 'name'),set_value('branch_id'));?>
+                        </div>
+                </div>  
+                <button type="submit" class="btn"><i class="icon-search icon-black"></i> Search</button>  
+            </fieldset>   
+            <input type="hidden" name="search" value="1" />        
+        </form>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
     <?php if (isset($spoilages) && count($spoilages) > 0):?>
-        <table class="">
+        <table class="table table-stiped">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -69,16 +69,10 @@
                 </tr>
                 <?php endforeach;?>
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="8" class="pagination">
-                        <?php echo $this->pagination->create_links(); ?>
-                    </td>
-                </tr>                
+            <tfoot>             
             </tfoot>
-        </table>
-        <div id="dialog-confirm" title="Delete this item?">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This item will be permanently deleted and cannot be recovered. Are you sure?</p>
-        </div>    
+        </table>    
+        <?php echo $this->pagination->create_links(); ?>        
     <?php endif;?>
+    </div>
 </div>
