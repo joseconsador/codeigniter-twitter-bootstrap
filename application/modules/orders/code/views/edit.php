@@ -26,11 +26,11 @@
             <input type="hidden" id="branch_id" name="branch_id" value="<?php echo $this->user->branch_id;?>" />
         <?php endif;?>    
         <ul class="nav nav-tabs">
-            <?php if($this->user->is_admin):?>        
-            <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+            <?php if($this->user->is_admin):?>
+            <li><a href="#details" data-toggle="tab">Details</a></li>
             <?php endif;?>
             <!-- Client tab -->
-            <li><a href="#client" data-toggle="tab">Client Info</a></li>      
+            <li <?php if(!$this->user->is_admin) echo 'class="active"'?>><a href="#client" data-toggle="tab">Client Info</a></li>      
     		<!-- Order tab -->
             <li><a href="#order" data-toggle="tab">Order Info</a></li>
     		<!-- Payment tab -->
@@ -38,8 +38,10 @@
         </ul>
 
         <div class="tab-content">
+            <?php if($this->user->is_admin):?>
             <div class="tab-pane active" id="details"><?php $this->load->view('order/details');?></div>
-            <div class="tab-pane" id="client"><?php $this->load->view('order/client');?></div> 
+            <?php endif;?>
+            <div class="tab-pane <?php if(!$this->user->is_admin) echo 'active'?>" id="client"><?php $this->load->view('order/client');?></div> 
             <div class="tab-pane" id="order"><?php $this->load->view('order/order');?></div>        
             <div class="tab-pane" id="payment"><?php $this->load->view('order/payment');?></div>          
         </div>
