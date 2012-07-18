@@ -21,6 +21,8 @@ class Inventory extends MY_Controller {
                 
         $this->_form_view = 'item_inventory_edit';
         $this->load->config('inventory');
+
+        $this->load->vars(array('inventory_nav' => 'class="active"'));        
     }
 
     // --------------------------------------------------------------------
@@ -30,7 +32,7 @@ class Inventory extends MY_Controller {
      *
      * @param int $page 
      */
-    function index($page = 0)
+    function index()
     {              
         $page = 0;
 

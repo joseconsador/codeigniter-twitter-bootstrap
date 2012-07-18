@@ -1,52 +1,67 @@
 <?php if (!defined('BASEPATH'))
     exit('No direct script access allowed'); ?>
 
-<h3>Filter</h3>
+<ul class="breadcrumb">
+  <li>
+    <a href="<?=site_url('dashboard')?>">Dashboard</a> <span class="divider">/</span>
+  </li>
+  <li class="active">Inventory</li>
+</ul>
 
-<form id="search-form" method="get" action="">
-    <div class="grid_3">
-        <p>
-            <label>Item</label>
-            <input type="text" name="item_name" value="<?=set_value('item_name');?>" />                    
-        </p>    
+<div class="row-fluid">
+    <div class="span-12">    
+        <a class="btn btn-success" href="<?=current_url() . '/form'?>">
+            <i class="icon-plus icon-white"></i> 
+            Add
+        </a>
+        <a class="btn" href="#filters" data-toggle="collapse"><i class="icon-plus icon-black"></i> Filters</a>
     </div>
-    <div class="grid_3">
-        <p>
-            <label>Branch</label>
-            <?=form_dropdown('branch_id', create_dropdown('branches', 'name'))?>
-        </p>
-    </div>
-    <div class="grid_4">
-        <p>
-            <label>Quantity</label>       
-            <?=form_dropdown('qty_type', array(
-                    'eq'  => 'Equal to', 
-                    'gt'  => 'Greater than', 
-                    'gte' => 'Greater than or equal to',
-                    'lt'  => 'Less than',
-                    'lte' => 'Less than or equal to'
-                    ),
-                    set_value('qty_type')
-                );
-                ?>
-        </p>
-    </div>
-    <div class="grid_1">
-        <p>
-            <label>&nbsp;</label>
-            <input type="text" name="quantity" value="<?=set_value('quantity');?>" />
-        </p>
-    </div>
-    <div class="clear"></div>
-    <input type="submit" value="Search" />
-    <input type="hidden" name="search" value="1" />        
-</form>
+</div>
 
-<h3>Inventory</h3>
 
-<div class="grid_16">
+<div id="filters" class="collapse">    
+    <div class="span-12">
+        <form class="well form-inline require-validation">
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="name">Item Name</label>
+                        <div class="controls">
+                            <input type="text" class="input-xlarge" name="name" id="name" value="<?php echo isset($name) ? $name : '';?>" />
+                        </div>
+                </div>  
+                <div class="control-group">
+                    <label class="control-label" for="branch_id">Branch</label>
+                        <div class="controls">
+                            <?=form_dropdown('branch_id', create_dropdown('branches', 'name'))?>
+                        </div>
+                </div>                       
+                <div class="control-group">
+                    <label class="control-label" for="qty_type">Quantity</label>
+                        <div class="controls">
+                            <?=form_dropdown('qty_type', array(
+                                    'eq'  => 'Equal to', 
+                                    'gt'  => 'Greater than', 
+                                    'gte' => 'Greater than or equal to',
+                                    'lt'  => 'Less than',
+                                    'lte' => 'Less than or equal to'
+                                    ),
+                                    set_value('qty_type')
+                                );
+                                ?>                            
+                            <input type="text" name="quantity" class="number" value="<?=set_value('quantity');?>" />                                
+                        </div>
+                </div>     
+                <button type="submit" class="btn"><i class="icon-search icon-black"></i> Search</button>  
+            </fieldset>    
+            <input type="hidden" name="search" value="1" />        
+        </form>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
     <?php if (isset($inventory) && count($inventory) > 0):?>
-        <table class="">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -64,28 +79,22 @@
                     <td><?=$item->branch_name?></td>
                     <td><?=$item->quantity?></td>                                                            
                     <td>
-                        <span class="clearfix" style="float: left;">
-                            <span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-pencil"></span>
-                            <?=anchor('items/inventory/form/' . $item->item_inventory_id, 'Edit');?>
-                        </span>                        
-                        <span>
-                            <span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-cancel"></span>
-                            <?=anchor('items/inventory/delete/' . $item->item_inventory_id, 'Delete', 'class="jqdelete"');?>
-                        </span>                                                
+                        <a class="btn" href="<?=site_url('items/inventory/form/' . $item->item_inventory_id)?>">
+                            <i class="icon-edit icon-black"></i> 
+                            Edit
+                        </a>                                             
+                       <a class="btn btn-danger delete" href="<?=site_url('items/inventory/delete/' . $item->item_inventory_id)?>">
+                            <i class="icon-trash icon-white"></i> 
+                            Delete
+                        </a>                                                  
                     </td>
                 </tr>
-                <?php endforeach;?>
+                <?php endforeach;?>            
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="8" class="pagination">
-                        <?php echo $this->pagination->create_links(); ?>
-                    </td>
-                </tr>                
+            <tfoot>             
             </tfoot>
-        </table>
-        <div id="dialog-confirm" title="Delete this item?">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This item will be permanently deleted and cannot be recovered. Are you sure?</p>
-        </div>    
+        </table>    
+        <?php echo $this->pagination->create_links(); ?>        
     <?php endif;?>
+    </div>
 </div>

@@ -1,15 +1,26 @@
 <?php if (!defined('BASEPATH'))
     exit('No direct script access allowed'); ?>
 
-<h3>Transfers</h3>
+<ul class="breadcrumb">
+  <li>
+    <a href="<?=site_url('dashboard')?>">Dashboard</a> <span class="divider">/</span>
+  </li>
+  <li class="active">Transfers</li>
+</ul>
 
-<div class="grid_16">
-    <span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-plus"></span>
-    <?=anchor('items/inventory/transfers/form', 'Transfer Out');?>
+<div class="row-fluid">
+    <div class="span-12">    
+        <a class="btn btn-success" href="<?=current_url() . '/form'?>">
+            <i class="icon-plus icon-white"></i> 
+            Add
+        </a>        
+    </div>
 </div>
-<div class="grid_16">
+
+<div class="row-fluid">
+    <div class="span12">
     <?php if (isset($transfers) && count($transfers) > 0):?>
-        <table class="">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -30,29 +41,23 @@
                     <td><?=$transfer->getStaff()->getFullName()?></td>
                     <td><?=$transfer->code?></td>                    
                     <td><?=$transfer->getStatus()?>
-                    <td>                        
-                        <span class="clearfix" style="float: left;">
-                            <span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-pencil"></span>
-                            <?=anchor('items/inventory/transfers/view/' . $transfer->inventory_transfer_id, 'View');?>
-                        </span>                        
-                        <span>
-                            <span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-cancel"></span>
-                            <?=anchor('items/inventory/transfers/delete/' . $transfer->inventory_transfer_id, 'Delete', 'class="jqdelete"');?>
-                        </span>                                                
-                    </td>
-                </tr>
-                <?php endforeach;?>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="8" class="pagination">
-                        <?php echo $this->pagination->create_links(); ?>
+                    <td>         
+                        <a class="btn btn-info" href="<?=site_url('items/inventory/transfers/view/' . $transfer->inventory_transfer_id)?>">
+                            <i class="icon-info-sign icon-white"></i> 
+                            View
+                        </a>                                   
+                       <a class="btn btn-danger delete" href="<?=site_url('items/inventory/transfers/delete/' . $transfer->inventory_transfer_id)?>">
+                            <i class="icon-trash icon-white"></i> 
+                            Delete
+                        </a>                                                         
                     </td>
                 </tr>                
+                <?php endforeach;?>
+            </tbody>
+            <tfoot>             
             </tfoot>
-        </table>
-        <div id="dialog-confirm" title="Delete this transfer?">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This item will be permanently deleted and cannot be recovered. Are you sure?</p>
-        </div>    
+        </table>    
+        <?php echo $this->pagination->create_links(); ?>        
     <?php endif;?>
+    </div>
 </div>

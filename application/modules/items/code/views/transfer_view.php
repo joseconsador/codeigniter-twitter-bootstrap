@@ -1,12 +1,21 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
+
+<ul class="breadcrumb">
+  <li>
+    <a href="<?=site_url('dashboard')?>">Dashboard</a> <span class="divider">/</span>
+  </li>
+  <li class="active">Transfers</li>
+</ul>
+
+
+<div class="grid_16 well">
 <?php if ($this->user->is_admin && !$transfer->approved):?>
     <?php echo form_open('/items/inventory/transfers/approve')?>
     <?php echo form_hidden('inventory_transfer_id', $transfer->inventory_transfer_id);?>
     <p><input type="submit" name="submit" value="Approve"/></p>    
     <?php echo form_close()?>
 <?php endif?>
-<h3>Details</h3>
-<div class="grid_16">
+
     <div class="grid_3">
         <p>
             <label>Control Number</label>
@@ -32,8 +41,8 @@
 </div>
 
 <h3>Transfer Out</h3>
-<div class="grid_16">
-    <table class="">
+<div class="grid_16 well">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Item</th>

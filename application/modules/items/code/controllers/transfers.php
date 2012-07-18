@@ -22,6 +22,7 @@ class Transfers extends MY_Controller {
         $this->load->model('model_transfers', '' ,true);        
         
         $this->model = $this->model_transfers;
+        $this->load->vars(array('transfers_nav' => 'class="active"'));
     }
 
     // --------------------------------------------------------------------

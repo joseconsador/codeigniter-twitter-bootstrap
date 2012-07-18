@@ -19,7 +19,9 @@
                 <dd><?= $branch;?></dd>
             <dt>Staff</dt>
                 <dd><?= $staff_firstname . ' ' . $staff_lastname;?></dd>
-        </dl>
+            <dt>Order Type</dt>
+                <dd><?=$order_type_name?></dd>
+        </dl>                
     </div>
 
     <div class="span4">
@@ -44,7 +46,7 @@
         <h3>Payment Details</h3>
         <dl>
             <dt>Mode of Payment</dt>
-            <dd><?=$payment_type?></dd>
+            <dd><?=$payment_type?><?php if ($payment_type_id == 2) echo '(' . $card_number . ')'?></dd>
         </dl>
         <table class="table">
             <tr>
@@ -110,12 +112,6 @@
             </table>
         </div>
         <hr />
-        <div class="span4">
-            <dl>
-                <dt>Order Type</dt>
-                <dd><?=$order_type_name?></dd>
-            </dl>
-        </div>
         <div class="clearfix"></div>
         <?php if($order_type == 1):?>
         <div class="grid_16">    
@@ -135,67 +131,34 @@
         <?php endif;?>
         <!-- Delivery -->
         <?php if ($order_type == 2):?>
-        <div class="grid_16">
-            <div class="clearfix"></div>
-            <div class="grid_5">
-                <p>
-                    <label>Date and Time</label>
-                    <?php echo isset($order_delivery->delivery_datetime) ? $order_delivery->delivery_datetime : ''; ?>
-                </p>
-            </div>
-            <div class="grid_5">
-                <p>
-                    <label>Message</label>
-                    <?php echo isset($order_delivery->message) ? $order_delivery->message : ''; ?>
-                </p>
-            </div>
-            <div class="clearfix"></div>
-            <div class="grid_5">
-                <p>
-                    <label>First Name</label>
-                    <?php echo isset($order_delivery->firstname) ? $order_delivery->firstname : ''; ?>
-                </p>
-            </div>
-            <div class="grid_5">
-                <p>
-                    <label>Last Name</label>
-                    <?php echo isset($order_delivery->lastname) ? $order_delivery->lastname : ''; ?>
-                </p>
-            </div>
-            <div class="clearfix"></div>
-            <div class="grid_5">
-                <p>
-                    <label>Cellphone</label>
-                    <?php echo isset($order_delivery->firstname) ? $order_delivery->firstname : ''; ?>
-                </p>
-            </div>
-            <div class="grid_5">
-                <p>
-                    <label>Telephone</label>
-                    <?php echo isset($order_delivery->telephone) ? $order_delivery->telephone : ''; ?>
-                </p>
-            </div>
-            <div class="grid_5">
-                <p>
-                    <label>Email</label>
-                    <?php echo isset($order_delivery->email) ? $order_delivery->email : ''; ?>
-                </p>
-            </div>
-            <div class="clearfix"></div>
-            <div class="grid_2">
-                <p>
-                    <label>Address</label>
-                    <?php echo isset($order_delivery->address) ? $order_delivery->address : ''; ?>
-                </p>
-            </div>  
-            <div class="grid_5">
-                <p>
-                    <label>City</label>
-                    <?php echo isset($order_delivery->city) ? $order_delivery->city : ''; ?>
-                </p>
-            </div>    
-            <div class="clearfix"></div>                    
-        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Date and Time</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Message</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?php echo isset($order_delivery->delivery_datetime) ? $order_delivery->delivery_datetime : ''; ?></td>
+                    <td>
+                        <?php echo isset($order_delivery->firstname) ? $order_delivery->firstname : ''; ?>&nbsp;
+                        <?php echo isset($order_delivery->lastname) ? $order_delivery->lastname : ''; ?>
+                    </td>
+                    <td>
+                        <?php echo isset($order_delivery->address) ? $order_delivery->address : ''; ?>, 
+                        <?php echo isset($order_delivery->city) ? $order_delivery->city : ''; ?>
+                    </td>
+                    <td><?php echo isset($order_delivery->message) ? $order_delivery->message : ''; ?></td>
+                    <td><?php echo isset($order_delivery->cellphone) ? $order_delivery->cellphone : ''; ?></td>
+                    <td><?php echo isset($order_delivery->email) ? $order_delivery->email : ''; ?></td>
+                </tr>
+            </tbody>
+        </table>
         <?php endif;?>
         <!-- END Delivery -->
     </div>

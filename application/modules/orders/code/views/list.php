@@ -121,8 +121,8 @@
                     <td><?=$order->status?></td>
                     <td><?=date('M d, Y h:i a', strtotime($order->date_created))?></td>                    
                     <td>       
-                        <a class="btn" href="<?=site_url('orders/view/' . $order->order_id)?>">
-                            <i class="icon-zoom-in icon-black"></i> 
+                        <a class="btn btn-info" href="<?=site_url('orders/view/' . $order->order_id)?>">
+                            <i class="icon-info-sign icon-white"></i> 
                             View
                         </a>
                         <?php if ($order->status != 'Complete'):?>

@@ -87,11 +87,11 @@
                     <li><a href="<?= site_url('dashboard') ?>">Dashboard</a></li>
                     <?php endif;?>
                     <li <?=isset($order_nav) ? $order_nav : ''?>><a href="<?= site_url('orders') ?>">Orders</a></li>
-                    <li><a href="<?= site_url('items/inventory/transfers') ?>">Transfers</a></li>
+                    <li <?=isset($transfers_nav) ? $transfers_nav : ''?>><a href="<?= site_url('items/inventory/transfers') ?>">Transfers</a></li>
                     <?php if ($this->user->is_admin):?>
                     <li <?=isset($item_nav) ? $item_nav : ''?>><a href="<?= site_url('items') ?>">Items</a></li>
                     <li <?=isset($category_nav) ? $category_nav : ''?>><a href="<?= site_url('items/categories') ?>">Categories</a></li>
-                    <li><a href="<?= site_url('items/inventory') ?>">Inventory</a></li>
+                    <li <?=isset($inventory_nav) ? $inventory_nav : ''?>><a href="<?= site_url('items/inventory') ?>">Inventory</a></li>
                     <li <?=isset($spoilages_nav) ? $spoilages_nav : ''?>><a href="<?= site_url('items/inventory/spoilages') ?>">Spoilage</a></li>
                     <li <?=isset($purchasing_nav) ? $purchasing_nav : ''?>><a href="<?= site_url('items/purchasing') ?>">Purchasing</a></li>
                     <li <?=isset($branch_nav) ? $branch_nav : ''?>><a href="<?= site_url('branches') ?>">Branches</a></li>

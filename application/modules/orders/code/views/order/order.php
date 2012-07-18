@@ -4,8 +4,6 @@
         <input type="text" name="items_description" class="required" value="<?php echo isset($items_description) ? $items_description : ''; ?>" />
     </div>
 </div>
-<div class="clearfix"></div>
-
 <div class="control-group">
     <label class="control-label" for="order_cost">Items</label>
     <div class="controls">
@@ -125,6 +123,12 @@
 <div class="hidden" id="delivery-details">	
 	<div class="span5">		
 		<div class="control-group">
+		    <label class="control-label" for="delivery[origin_id]">Point of Origin</label>
+		    <div class="controls">        
+				<?= form_dropdown('delivery[origin_id]', create_dropdown('branches', 'name'), isset($order_delivery->origin_ud) ? $order_delivery->origin_ud : '');?>
+		    </div>
+		</div>	
+		<div class="control-group">
 		    <label class="control-label" for="delivery[delivery_datetime]">Date and Time</label>
 		    <div class="controls">        
 				<input type="text" name="delivery[delivery_datetime]" class="datetimepick" value="<?php echo isset($order_delivery->delivery_datetime) ? $order_delivery->delivery_datetime : ''; ?>" />			
@@ -151,17 +155,11 @@
 	</div>
 	<div class="span5">
 		<div class="control-group">
-		    <label class="control-label" for="deliver[cellphone]">Cellphone</label>
+		    <label class="control-label" for="deliver[cellphone]">Contact</label>
 		    <div class="controls">        
 				<input type="text" class="" name="delivery[cellphone]" value="<?php echo isset($order_delivery->firstname) ? $order_delivery->firstname : ''; ?>" />			
 		    </div>
 		</div>	
-		<div class="control-group">
-		    <label class="control-label" for="deliver[telephone]">Telephone</label>
-		    <div class="controls">        			
-				<input type="text" class="" name="delivery[telephone]" value="<?php echo isset($order_delivery->telephone) ? $order_delivery->telephone : ''; ?>" />
-		    </div>
-		</div>		
 		<div class="control-group">
 		    <label class="control-label" for="deliver[email]">Email</label>
 		    <div class="controls">        			

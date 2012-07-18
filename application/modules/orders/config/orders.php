@@ -81,5 +81,11 @@ $config['order/edit'] = $config['order/add'] = array (
             'field' => 'order_cost',
             'label' => 'Order Cost',
             'rules' => 'trim'
-        )                
+        ),
+        array(
+            'field' => 'card_number',
+            'label' => 'Card Number',
+            'rules' => 'trim'
+        )   
+
 );
