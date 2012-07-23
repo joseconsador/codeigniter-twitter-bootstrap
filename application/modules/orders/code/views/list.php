@@ -102,7 +102,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th><a href="#">ID</a></th>
                     <th>Control Number</th>
                     <th>Customer Name</th>                    
                     <th>Grand Total</th>

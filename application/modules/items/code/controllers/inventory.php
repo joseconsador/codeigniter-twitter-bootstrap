@@ -22,7 +22,7 @@ class Inventory extends MY_Controller {
         $this->_form_view = 'item_inventory_edit';
         $this->load->config('inventory');
 
-        $this->load->vars(array('inventory_nav' => 'class="active"'));        
+        $this->load->vars(array('catalog_nav' => 'class="active"'));        
     }
 
     // --------------------------------------------------------------------

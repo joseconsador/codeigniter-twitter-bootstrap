@@ -4,14 +4,15 @@
  
 <div class="span8 well">		
 	<h2>Sales</h2>
-	<p>
-		<label for="branch_id">Branch</label>
-		<?php 
-		$branches = create_dropdown('branches', 'name');
-		$branches[''] = 'All';
-		?>
-		<?php echo form_dropdown('branch_id', $branches);?>
-
+	<p>		
+		<div <?php echo (!$this->user->is_admin) ? 'class="hidden"' : '' ?>>
+			<label for="branch_id">Branch</label>
+			<?php 
+			$branches = create_dropdown('branches', 'name');
+			$branches[''] = 'All';
+			?>
+			<?php echo form_dropdown('branch_id', $branches, $this->user->branch_id);?>
+		</div>
 		<label for="date_range">Range</label>
 		<select name="date_range">
 			<option value="1">This month</option>

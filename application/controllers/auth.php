@@ -13,7 +13,7 @@ class Auth extends MY_Controller
 			$this->load->model('user_model');
 			
 			if ($this->user_model->authenticate($this->input->post('username'), $this->input->post('password'))) {
-				redirect('orders');
+				redirect('dashboard');
 			} else {
 				$data['error'] = 'Your login credentials are incorrect.';	
 			}

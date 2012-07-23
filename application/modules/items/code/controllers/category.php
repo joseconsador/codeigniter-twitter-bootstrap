@@ -22,7 +22,7 @@ class Category extends MY_Controller {
         $this->_form_view = 'category_edit';        
         $this->load->config('categories');
 
-        $this->load->vars(array('category_nav' => 'class="active"'));
+        $this->load->vars(array('catalog_nav' => 'class="active"'));
     }
 
     // --------------------------------------------------------------------

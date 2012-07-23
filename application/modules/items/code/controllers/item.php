@@ -24,7 +24,7 @@ class Item extends MY_Controller {
         $this->_form_view = 'item_edit';
         $this->load->config('items');
 
-        $this->load->vars(array('item_nav' => 'class="active"'));
+        $this->load->vars(array('catalog_nav' => 'class="active"'));
     }
 
     // --------------------------------------------------------------------

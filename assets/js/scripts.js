@@ -4,6 +4,8 @@ $(document).ready(function () {
     $('.accordion').accordion({
         autoHeight:false
     });
+
+    $('.dropdown-toggle').dropdown();
     
 	$('.datepick').datepicker();
 	$('.datetimepick').datetimepicker({

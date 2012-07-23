@@ -23,7 +23,7 @@ class Purchasing extends MY_Controller {
         $this->model = new ModelFactory('item_purchasing', 'item_purchasing_id');
         $this->suppliers = new ModelFactory('suppliers', 'supplier_id');
 
-        $this->load->vars(array('purchasing_nav' => 'class="active"'));
+        $this->load->vars(array('catalog_nav' => 'class="active"'));
     }
 
     // --------------------------------------------------------------------

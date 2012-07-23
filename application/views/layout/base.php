@@ -12,6 +12,7 @@
 
         <!-- Le styles -->
         <link href="<?=css_dir('bootstrap.css')?>" rel="stylesheet">
+
         <style type="text/css">
             body {
             padding-top: 60px;
@@ -33,10 +34,18 @@
             }
             .error {
                 color: red;              
-            }                 
+            }            
+            
+            /* css for timepicker */
+            .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+            .ui-timepicker-div dl { text-align: left; }
+            .ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+            .ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+            .ui-timepicker-div td { font-size: 90%; }
+            .ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }                 
         </style>
         <link href="<?=css_dir('bootstrap-responsive.css')?>" rel="stylesheet">
-        <link href="<?=css_dir('jqueryui/jquery-ui-1.8.16.custom.css')?>" rel="stylesheet">
+        <link href="<?=css_dir('jquery-ui-1.8.16.custom.css')?>" rel="stylesheet">        
         <link type="text/css" rel="stylesheet" href="<?= css_dir('chosen.css'); ?>" />
         
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -82,18 +91,21 @@
                 </ul>
               </div>
               <div class="nav-collapse">
-                <ul class="nav">
-                    <?php if ($this->user->is_admin):?>
-                    <li><a href="<?= site_url('dashboard') ?>">Dashboard</a></li>
-                    <?php endif;?>
+                <ul class="nav">                    
+                    <li <?=isset($dashboard_nav) ? $dashboard_nav : ''?>><a href="<?= site_url('dashboard') ?>">Dashboard</a></li>
                     <li <?=isset($order_nav) ? $order_nav : ''?>><a href="<?= site_url('orders') ?>">Orders</a></li>
                     <li <?=isset($transfers_nav) ? $transfers_nav : ''?>><a href="<?= site_url('items/inventory/transfers') ?>">Transfers</a></li>
-                    <?php if ($this->user->is_admin):?>
-                    <li <?=isset($item_nav) ? $item_nav : ''?>><a href="<?= site_url('items') ?>">Items</a></li>
-                    <li <?=isset($category_nav) ? $category_nav : ''?>><a href="<?= site_url('items/categories') ?>">Categories</a></li>
-                    <li <?=isset($inventory_nav) ? $inventory_nav : ''?>><a href="<?= site_url('items/inventory') ?>">Inventory</a></li>
-                    <li <?=isset($spoilages_nav) ? $spoilages_nav : ''?>><a href="<?= site_url('items/inventory/spoilages') ?>">Spoilage</a></li>
-                    <li <?=isset($purchasing_nav) ? $purchasing_nav : ''?>><a href="<?= site_url('items/purchasing') ?>">Purchasing</a></li>
+                    <?php if ($this->user->is_admin):?>                                        
+                    <li class="dropdown <?=isset($catalog_nav) ? 'active' : ''?>">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Catalog</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?= site_url('items/inventory') ?>">Inventory</a></li>
+                            <li><a href="<?= site_url('items') ?>">Items</a></li>
+                            <li><a href="<?= site_url('items/categories') ?>">Categories</a></li>
+                            <li><a href="<?= site_url('items/inventory/spoilages') ?>">Spoilage</a></li>
+                            <li><a href="<?= site_url('items/purchasing') ?>">Purchasing</a></li>
+                        </ul>
+                    </li>                                        
                     <li <?=isset($branch_nav) ? $branch_nav : ''?>><a href="<?= site_url('branches') ?>">Branches</a></li>
                     <li <?=isset($suppliers_nav) ? $suppliers_nav : ''?>><a href="<?= site_url('suppliers') ?>">Suppliers</a></li>
                     <li <?=isset($staff_nav) ? $staff_nav : ''?>><a href="<?= site_url('staff') ?>">Staff</a></li>

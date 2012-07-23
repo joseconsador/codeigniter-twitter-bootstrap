@@ -1,44 +1,63 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
-<h2>Transfer Out</h2>
+<ul class="breadcrumb">
+  <li>
+    <a href="<?=site_url('dashboard')?>">Dashboard</a> <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="<?=site_url('items/inventory/transfers')?>">Transfers</a> <span class="divider">/</span>
+  </li>
+  <li class="active">Add/Edit</li>
+</ul>
+
 <?php if(validation_errors()):?>
-    <p class="error"><?=validation_errors()?></p>
+    <div class="alert">
+        <button class="close" data-dismiss="alert">×</button>      
+        <span class="label label-important">Error !</span>
+        <?=validation_errors()?>
+    </div>
 <?php endif;?>
-<form id="form-transfer" action="" method="post" class="require-validation">
+
+<form id="form-transfer" action="" method="post" class="form-horizontal well require-validation">
     <?php if (!isset($record_id)) {$record_id = '-1';}?>
     <input type="hidden" name="<?=$this->model->get_primary_key()?>" value="<?=$record_id?>" />    
-    <?php if ($this->user->is_admin):?>
-    <div class="grid_5 preconfirm">
-        <p>
-            <label>Branch From</label>
-            <?=form_dropdown('branch_id_from', create_dropdown('branches', 'name'), isset($branch_id_from) ? $branch_id_from : '', 'class="required" id="branch_id_from"');?>
-        </p>
-    </div>
-    <?php else:?>
-        <input type="hidden" id="branch_id_from" name="branch_id_from" value="<?=$this->user->branch_id?>" />
-    <?php endif;?>
-    <div class="grid_5 preconfirm">
-        <p>
-            <label>Branch To</label>
-            <?=form_dropdown('branch_id_to', create_dropdown('branches', 'name'), isset($branch_id_to) ? $branch_id_to : '', 'class="required"');?>
-        </p>
-    </div>
-    <div class="grid_6 preconfirm">
-        <p>
-            <label>Control Number</label>
-            <input type="text" class="required" name="code" value="<?php echo isset($code) ? $code : '';?>" />
-        </p>
-    </div>    
+    <div class="row-fluid">
+        <?php if ($this->user->is_admin):?>    
+            <div class="control-group preconfirm">
+                <label class="control-label" for="branch_id_from">Branch From</label>
+                <div class="controls">
+                    <?=form_dropdown('branch_id_from', create_dropdown('branches', 'name'), isset($branch_id_from) ? $branch_id_from : '', 'class="required" id="branch_id_from"');?>
+                </div>
+            </div> 
+        <?php else:?>
+            <input type="hidden" id="branch_id_from" name="branch_id_from" value="<?=$this->user->branch_id?>" />
+        <?php endif;?>
+        <div class="control-group preconfirm">
+            <label class="control-label" for="branch_id_to">Branch To</label>
+            <div class="controls">
+                <?=form_dropdown('branch_id_to', create_dropdown('branches', 'name'), isset($branch_id_to) ? $branch_id_to : '', 'class="required"');?>
+            </div>
+        </div>
+        <div class="control-group preconfirm">
+            <label class="control-label" for="code">Control Number</label>
+            <div class="controls">
+                <input type="text" class="required" name="code" value="<?php echo isset($code) ? $code : '';?>" />
+            </div>
+        </div>    
 
-    <div class="grid_16">
-        <p>
-            <input id="confirm-branch" type="button" value="Confirm"/>
-            <input id="cancel-branch" type="button" value="Cancel"/>
-        </p>
+        <div class="controls">
+            <input id="confirm-branch" class="btn" type="button" value="Confirm"/>
+            <input id="cancel-branch" class="btn" type="button" value="Cancel"/>
+        </div>     
     </div>
-    <div id="ilist"><?php $this->load->view('item_list_modify');?></div>
-    <div class="grid_16">
-        <input type="reset" value="Reset"/>
-        <input type="submit" name="submit" value="Submit"/>
+    <div class="row-fluid">
+        <div id="ilist"><?php $this->load->view('item_list_modify');?></div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <input type="button" onclick="history.go(-1)" class="btn" value="Cancel"/>
+        </div>
     </div>        
 </form>
 

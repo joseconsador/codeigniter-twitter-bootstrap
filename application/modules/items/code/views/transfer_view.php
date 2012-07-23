@@ -12,30 +12,30 @@
 <?php if ($this->user->is_admin && !$transfer->approved):?>
     <?php echo form_open('/items/inventory/transfers/approve')?>
     <?php echo form_hidden('inventory_transfer_id', $transfer->inventory_transfer_id);?>
-    <p><input type="submit" name="submit" value="Approve"/></p>    
+    <p><input type="submit" class="btn btn-large btn-primary" name="submit" value="Approve"/></p>    
     <?php echo form_close()?>
 <?php endif?>
 
     <div class="grid_3">
         <p>
-            <label>Control Number</label>
+            <h4>Control Number</h4>
             <?= $transfer->code;?>
         </p>
     </div>
     <div class="grid_3">
         <p>
-            <label>Branch From</label>
+            <h4>Branch From</h4>
             <?= $transfer->getBranchFrom()->name;?>
         </p>
     </div>
     <div class="grid_3">
         <p>
-            <label>Branch To</label>
+            <h4>Branch To</h4>
             <?= $transfer->getBranchTo()->name;?>
     </div>
     <div class="grid_3">
         <p>
-            <label>Staff</label>
+            <h4>Staff</h4>
             <?= $transfer->getStaff()->getFullName();?>
     </div>    
 </div>
