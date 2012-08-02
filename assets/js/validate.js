@@ -39,12 +39,12 @@ $(document).ready(function () {
     // Validate forms with class require-validation.
     // http://docs.jquery.com/Plugins/Validation
     $('form.require-validation').validate({
-        highlight: function(label) {console.log($('a[href=#' + $(label).parents('.tab-pane').attr('id') + ']'));
+        highlight: function(label) {
             $(label).closest('.control-group').addClass('error');
             $('a[href=#' + $(label).parents('.tab-pane').attr('id') + ']').addClass('error').removeClass('valid');
         },
         success: function(label) {
-            label
+            $(label)
                 .text('OK!').addClass('valid')
                 .closest('.control-group').addClass('success');
             

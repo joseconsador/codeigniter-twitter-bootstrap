@@ -29,6 +29,10 @@ class Model_inventory extends MY_Model {
 	// --------------------------------------------------------------------
 
     public function fetch_all($limit = null, $offset = null, $sort = null, $order = 'desc') {
+        if (!$this->user->is_admin) {
+            $this->db->where($this->get_table_name() . '.branch_id', $this->user->branch_id);
+        }
+
         $this->load->model(array('items', 'branches'));
 
         $this->db->select(

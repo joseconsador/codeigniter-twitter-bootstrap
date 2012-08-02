@@ -189,9 +189,10 @@ class Orders extends MY_Model {
         $order = parent::get($id);
 
         if ($order) {
+            $order = new cOrder($order);
             $this->load->model(array('order_address_client', 'order_item', 'order_pickup', 'order_delivery'));
 
-            $order->order_items    = cOrderItem::getByOrderId($id);            
+            $order->order_items    = $order->getOrderItems();
             $order->client_address = $this->order_address_client->get($order->order_address_client_id);
             $order->order_pickup   = $this->order_pickup->get($id, $this->model->get_primary_key());
             $order->order_delivery = $this->order_delivery->get($id, $this->model->get_primary_key());            

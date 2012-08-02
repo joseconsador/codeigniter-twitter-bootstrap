@@ -102,7 +102,7 @@
 <div class="control-group">
     <label class="control-label" for="order_type">Order Type</label>
     <div class="controls">        
-		<?= form_dropdown('order_type', create_dropdown('order_type', 'name'), isset($order_type) ? $order_type : '');?>
+		<?= form_dropdown('order_type', create_dropdown('order_type', 'name'), isset($order_type) ? $order_type : '', 'class="required"');?>
     </div>
 </div>	
 <!-- Order type inputs -->

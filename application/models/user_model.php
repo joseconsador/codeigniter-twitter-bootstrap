@@ -36,7 +36,7 @@ class User_model extends MY_Model {
 		if ($user) {			
 			$user = new cUser($user->user_id);
 
-			$user->last_signed_in = date('Y-m-d h:i:s');
+			$user->last_signed_in = date('Y-m-d H:i:s');
 			$user->save();
 
 			$this->session->set_userdata('logged_in', TRUE);

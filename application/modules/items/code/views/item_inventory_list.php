@@ -9,15 +9,16 @@
 </ul>
 
 <div class="row-fluid">
-    <div class="span-12">    
+    <div class="span-12">
+        <?php if ($this->user->is_admin):?>
         <a class="btn btn-success" href="<?=current_url() . '/form'?>">
             <i class="icon-plus icon-white"></i> 
             Add
         </a>
+        <?php endif;?>
         <a class="btn" href="#filters" data-toggle="collapse"><i class="icon-plus icon-black"></i> Filters</a>
     </div>
 </div>
-
 
 <div id="filters" class="collapse">    
     <div class="span-12">
@@ -29,12 +30,14 @@
                             <input type="text" class="input-xlarge" name="name" id="name" value="<?php echo isset($name) ? $name : '';?>" />
                         </div>
                 </div>  
+                <?php if ($this->user->is_admin):?>
                 <div class="control-group">
                     <label class="control-label" for="branch_id">Branch</label>
                         <div class="controls">
                             <?=form_dropdown('branch_id', create_dropdown('branches', 'name'))?>
                         </div>
-                </div>                       
+                </div>
+                <?php endif;?>
                 <div class="control-group">
                     <label class="control-label" for="qty_type">Quantity</label>
                         <div class="controls">
@@ -68,7 +71,7 @@
                     <th>Item</th>
                     <th>Branch</th>
                     <th>Quantity</th>
-                    <th>Actions</th>
+                    <?php if ($this->user->is_admin):?><th>Actions</th><?php endif;?>
                 </tr>
             </thead>
             <tbody>
@@ -77,7 +80,8 @@
                     <td><?=$item->item_inventory_id?></td>
                     <td><?=$item->item_name?></td>
                     <td><?=$item->branch_name?></td>
-                    <td><?=$item->quantity?></td>                                                            
+                    <td><?=$item->quantity?></td>
+                    <?php if ($this->user->is_admin):?>
                     <td>
                         <a class="btn" href="<?=site_url('items/inventory/form/' . $item->item_inventory_id)?>">
                             <i class="icon-edit icon-black"></i> 
@@ -86,8 +90,9 @@
                        <a class="btn btn-danger delete" href="<?=site_url('items/inventory/delete/' . $item->item_inventory_id)?>">
                             <i class="icon-trash icon-white"></i> 
                             Delete
-                        </a>                                                  
+                        </a>
                     </td>
+                    <?php endif;?>
                 </tr>
                 <?php endforeach;?>            
             </tbody>

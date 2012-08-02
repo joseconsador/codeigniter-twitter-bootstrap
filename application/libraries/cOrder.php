@@ -10,15 +10,15 @@ class cOrder extends cBase implements iModel
         return $CI->orders;
 	}
 
-	public function getItem()
+	public function getOrderItems()
 	{
-		if (!$this->inCache('item')) {
-			$item = new cItem($this->item_id);
+		if (!$this->inCache('items')) {
+			$items = cOrderItem::getByOrderId($this->order_id);
 
-			$this->setCache('item', $item);
+			$this->setCache('items', $items);
 		}
 
-		return $this->getCache('item');
+		return $this->getCache('items');
 	}
 
 	public function getBranch()
@@ -35,7 +35,7 @@ class cOrder extends cBase implements iModel
     // --------------------------------------------------------------------
 
     public function completeOrder() {
-        $itemCollection = cOrderItem::getByOrderId($this->order_id);
+        $itemCollection = $this->getOrderItems();
         // Check if there is enough.
         $errors = array();
         $items  = array();

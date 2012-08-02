@@ -53,7 +53,7 @@ class cInventory extends cBase implements iModel
 		$CI->db->order_by('quantity', 'asc');
 		$CI->db->limit($limit);
 
-		$result = $CI->db->get(self::getModel()->get_table_name());
+		$result = self::getModel()->fetch_all();
 
 		if ($result->num_rows() > 0) {
 			return new tCollection('cInventory', $result->result());

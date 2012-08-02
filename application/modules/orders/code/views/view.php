@@ -117,13 +117,13 @@
         <div class="grid_16">    
             <div class="grid_5">
                 <p>
-                    <label>Branch</label>
+                    <h4>Branch</h4>
                     <?=$order_pickup->branch?>
                 </p>
             </div>
             <div class="grid_5">
                 <p>
-                    <label>Date and Time</label>
+                    <h4>Date and Time</h4>
                     <?=$order_pickup->datetime?>
                 </p>
             </div>

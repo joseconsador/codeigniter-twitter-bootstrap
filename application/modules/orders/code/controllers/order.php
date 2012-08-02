@@ -110,9 +110,7 @@ class Order extends MY_Controller {
                     '',
                     '', 
                     $pagination['per_page'], 
-                    $page,
-                    $this->input->get('sort_by'), 
-                    $this->input->get('direction')
+                    $page
                 );      
                 
                 $total = $this->model->search($search, '')->num_rows();

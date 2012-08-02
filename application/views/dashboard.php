@@ -29,19 +29,33 @@
 
 <div class="span3">
 	<div class="well">
-		<h3><?=$this->user->firstname?></h3>
-		<p>
-			<strong>Last Signed In : </strong> <?=date('D M/d/Y, H:i a', strtotime($this->user->last_signed_in));?>
-			<br /><strong>IP Address : </strong> <?=$this->input->ip_address()?></p>
-	</div>
-	<div class="well">
 		<h3>Last 5 Sales</h3>		
-		<p><?$this->load->view('dashboard/orders')?></p>
-		<p><?=anchor('orders', 'View More &raquo;', 'class="btn"');?></p>
+		<p>
+			<?$this->load->view('dashboard/orders')?>
+	        <a class="btn btn-primary" href="<?=site_url('orders/form')?>">
+	            <i class="icon-plus icon-white"></i> 
+	            New Order
+	        </a>			
+	        <?=anchor('orders', 'View More &raquo;', 'class="btn"');?>
+		</p>		
 	</div>	
 	<div class="well">
-		<h3>Low Inventory</h3>		
-		<p><?$this->load->view('dashboard/inventory')?></p>
-		<p><?=anchor('items/inventory', 'View More &raquo;', 'class="btn"');?></p>	
+		<h3>Low Inventory</h3>
+		<p><?$this->load->view('dashboard/inventory')?>
+		<?php if ($this->user->is_admin):?>
+        <a class="btn btn-primary" href="<?=site_url('items/purchasing/form')?>">
+            <i class="icon-plus icon-white"></i> 
+            New Purchase
+        </a>
+		<?=anchor('items/inventory', 'View More &raquo;', 'class="btn"');?>
+		</p>
+		<?php endif;?>
 	</div>		
+
+	<div class="well">
+		<h3><?=$this->user->firstname?></h3>
+		<p>
+			<strong>Last Signed In : </strong> <?=date('D M/d/Y, h:i a', strtotime($this->user->last_signed_in));?>
+			<br /><strong>IP Address : </strong> <?=$this->input->ip_address()?></p>
+	</div>	
 </div>

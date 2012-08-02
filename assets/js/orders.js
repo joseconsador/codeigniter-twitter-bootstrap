@@ -1,10 +1,27 @@
 var subtotal = 0;
 
 $(document).ready(function () {
-	update_items_selection();
+	update_items_selection();	
 
 	$('select[name="item-selection"]').chosen({no_results_text: "No results matched"});
 	
+	$('a[data-toggle="tab"]:first').tab('show');	
+	$('#btnsubmit').hide();
+
+	$('a[data-toggle="tab"]').on('show', function (e) {		
+		if ($(e.currentTarget).attr('href') == '#payment') {
+			$('#btnsubmit').show();
+			$('#btn-next').hide();
+		} else {
+			$('#btn-next').show();
+			$('#btnsubmit').hide();
+		}
+	});
+
+	$('#btn-next').click(function () {
+		$('a[data-toggle="tab"]').parents('li.active').next().children('a[data-toggle="tab"]').tab('show');
+	});
+
 	/** Order Type **/
 	$('select[name="order_type"]').change(function () {		
 		switch ($(this).val()) {

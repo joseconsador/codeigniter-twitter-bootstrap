@@ -48,8 +48,9 @@
 
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-                <input type="button" onclick="history.go(-1)" class="btn" value="Cancel"/>
+                <a class="btn" href="javascript:void(0)" id="btn-next"><i class="icon-chevron-right"></i>Next</a>                
+                <button type="submit" id="btnsubmit" class="btn btn-primary">Save Changes</button>
+                <a class="btn" href="<?php echo site_url('orders')?>"><i class="icon-remove"></i>Cancel</a>
             </div>
         </div>          
 

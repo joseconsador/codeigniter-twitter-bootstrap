@@ -95,7 +95,10 @@
                     <li <?=isset($dashboard_nav) ? $dashboard_nav : ''?>><a href="<?= site_url('dashboard') ?>">Dashboard</a></li>
                     <li <?=isset($order_nav) ? $order_nav : ''?>><a href="<?= site_url('orders') ?>">Orders</a></li>
                     <li <?=isset($transfers_nav) ? $transfers_nav : ''?>><a href="<?= site_url('items/inventory/transfers') ?>">Transfers</a></li>
-                    <?php if ($this->user->is_admin):?>                                        
+                    <?php if (!$this->user->is_admin):?>
+                        <li <?=isset($inventory_nav) ? $inventory_nav : ''?>><a href="<?= site_url('items/inventory') ?>">Inventory</a></li>
+                    <?php endif;?>
+                    <?php if ($this->user->is_admin):?>
                     <li class="dropdown <?=isset($catalog_nav) ? 'active' : ''?>">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Catalog</a>
                         <ul class="dropdown-menu">
